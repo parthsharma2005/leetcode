@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int maximumPopulation(vector<vector<int>>& logs) {
+        const int MIN_YEAR = 1950;
+        const int MAX_YEAR = 2050;
+        int ansYear = MIN_YEAR;
+        int maxPop = 0;
+        int currentPop = 0;
+
+        vector<int> delta(MAX_YEAR + 2, 0);
+
+        for (auto &lg : logs) {
+            int birth = lg[0];
+            int death = lg[1];
+            delta[birth] += 1;
+            delta[death] -= 1;
+        }
+
+        for (int year = MIN_YEAR; year <= MAX_YEAR; ++year) {
+            currentPop += delta[year];
+            if (currentPop > maxPop) {
+                maxPop = currentPop;
+                ansYear = year;
+            }
+        }
+
+        return ansYear;
+    }
+};
